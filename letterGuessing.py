@@ -52,7 +52,7 @@ def ugibaj(zgreseni, zadetki):
 
 besede2 = [
     'češnja', 'breskev', 'marelica', 'sliva', 'nektarina',
-    'jabolko', 'hruška', 'impkaki', 'kutina', 'nešplja',
+    'jabolko', 'hruška', 'kaki', 'kutina', 'nešplja',
     'borovnica', 'grozdje', 'jagoda', 'malina', 'ribez', 'robida', 'brusnica', 'kosmulja',
     'oreh', 'lešnik', 'kostanj', 'arašid', 'mandelj', 'pistacija',
     'limona', 'pomaranča', 'grenivka', 'mandarina', 'limeta',
