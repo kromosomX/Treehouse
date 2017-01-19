@@ -33,7 +33,6 @@ def move_player(player, move):
         y -= 1
     elif move == "DOL":
         y += 1
-
     return x, y
 
 
@@ -77,7 +76,7 @@ def game_loop():
         draw_map(player)
         moves = get_moves(player)
         print("Trenutno se nahajaš v prostoru {}".format(player))  # fill with player position
-        print("Lahko se premakneš {}".format(", ".join(moves)))  # fill with available moves
+        print("Lahko se premakneš v te smeri {}".format(", ".join(moves)))  # fill with available moves
         print("Napiši IZHOD za izhod")
 
         move = input("> ")
