@@ -48,6 +48,7 @@ def get_moves(player):
         moves.remove("GOR")
     elif y == 4:
         moves.remove("DOL")
+
     return moves
 
 def draw_map(player):
