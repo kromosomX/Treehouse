@@ -14,18 +14,18 @@ COURSES = {
                     "functions", "input"}
 }
 
+
 def covers(inset):
-	listo=[]
-	for key, value in COURSES.items():
-		if not value.isdisjoint(inset):
-			listo.append(key)
-	return listo
-	
+    listo = []
+    for key, value in COURSES.items():
+        if not value.isdisjoint(inset):
+            listo.append(key)
+    return listo
+
+
 def covers_all(inset):
-	listo=[]
-	for key, value in COURSES.items():
-		if inset.issubset(value):
-			listo.append(key)
-	return listo
-
-
+    listo = []
+    for key, value in COURSES.items():
+        if inset.issubset(value):
+            listo.append(key)
+    return listo
