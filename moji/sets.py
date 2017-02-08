@@ -29,3 +29,5 @@ def covers_all(inset):
         if inset.issubset(value):
             listo.append(key)
     return listo
+def kook():
+    pass
