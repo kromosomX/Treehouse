@@ -11,20 +11,29 @@ import os
 # check for win/loss
 # clear screen and redraw grid
 
-CELLS = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0),
-         (0, 1), (1, 1), (2, 1), (3, 1), (4, 1),
-         (0, 2), (1, 2), (2, 2), (3, 2), (4, 2),
-         (0, 3), (1, 3), (2, 3), (3, 3), (4, 3),
-         (0, 4), (1, 4), (2, 4), (3, 4), (4, 4),
-         ]
+# CELLS = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0),
+#         (0, 1), (1, 1), (2, 1), (3, 1), (4, 1),
+#         (0, 2), (1, 2), (2, 2), (3, 2), (4, 2),
+#         (0, 3), (1, 3), (2, 3), (3, 3), (4, 3),
+#         (0, 4), (1, 4), (2, 4), (3, 4), (4, 4),
+#         ]
 
+CELLS = []
+XX = 5
+YY = 5
+
+
+def build_maze():
+    for y in range(XX):
+        for x in range(YY):
+            CELLS.append((x, y))
 
 def get_locations():
     return random.sample(CELLS, 3)
 
 
 def move_player(player, move):
-    x, y = player
+    x, y = player["ZADNJI"]
     if move == "LEVO":
         x -= 1
     elif move == "DESNO":
@@ -38,61 +47,69 @@ def move_player(player, move):
 
 def get_moves(player):
     moves = ["LEVO", "DESNO", "GOR", "DOL"]
-    x, y = player
+    x, y = player["ZADNJI"]
     if x == 0:
         moves.remove("LEVO")
-    elif x == 4:
+    elif x == XX - 1:
         moves.remove("DESNO")
     if y == 0:
         moves.remove("GOR")
-    elif y == 4:
+    elif y == YY - 1:
         moves.remove("DOL")
 
     return moves
 
 def draw_map(player):
-    print(" _"*5)
+    print(" _" * XX)
     tile = "|{}"
     for cell in CELLS:
         x,y = cell
-        if x<4:
+        if x < XX - 1:
             line_end=""
-            if cell == player:
+            if player["ZADNJI"] == cell:
                 output = tile.format("X")
+            elif cell in player:
+                output = tile.format(".")
             else:
                 output = tile.format("_")
         else:
             line_end = "\n"
-            if cell == player:
+            if player["ZADNJI"] == cell:
                 output = tile.format("X|")
+            elif cell in player:
+                output = tile.format(".|")
             else:
                 output = tile.format("_|")
         print(output, end = line_end)
 
 
 def game_loop():
-    monster, door, player = get_locations()
+    build_maze()
+    monster, door, player_start = get_locations()
+    player = {player_start: ".", "ZADNJI": player_start, "POSAST": monster}
     while True:
         draw_map(player)
         moves = get_moves(player)
-        print("Trenutno se nahajaš v prostoru {}".format(player))  # fill with player position
+        print("Trenutno se nahajaš v prostoru {}".format(player["ZADNJI"]))  # fill with player position
         print("Lahko se premakneš v te smeri {}".format(", ".join(moves)))  # fill with available moves
         print("Napiši IZHOD za izhod")
-
+        print(CELLS)
         move = input("> ")
-        move.upper()
+        move = move.upper()
 
         if move == 'IZHOD':
             break
         elif move in moves:
-            player = move_player(player, move)
+            premik = move_player(player, move)
+            player[premik] = "."
+            player["ZADNJI"] = premik
         else:
             print("Napačna poteza!")
             continue
-        if player == door:
+        if player["ZADNJI"] == door:
             print("Bravo zmagal si!")
             break
-        if player == monster:
+        if player["ZADNJI"] == monster:
             print("BRUHAHA!!! Pojedla te je pošast!")
             break
         print("\n" * 100)
